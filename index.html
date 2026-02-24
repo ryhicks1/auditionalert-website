@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AuditionAlert — Never Miss Your Next Role</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #FF6B47;
+    --coral-light: #FF8C6E;
+    --coral-pale: #FFF0EB;
+    --warm-white: #FFFAF8;
+    --dark: #1A1108;
+    --mid: #6B5C52;
+    --light: #C4B5AD;
+    --green: #2ECC8A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: rgba(255,250,248,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,107,71,0.1);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--coral);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span {
+    color: var(--dark);
+  }
+
+  .nav-cta {
+    background: var(--coral);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--coral-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(255,107,71,0.3);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,107,71,0.12) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(46,204,138,0.08) 0%, transparent 70%);
+    bottom: 0;
+    left: -50px;
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--coral-pale);
+    color: var(--coral);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 32px;
+    border: 1px solid rgba(255,107,71,0.2);
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .badge .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    max-width: 800px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+
+  .hero p {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--mid);
+    max-width: 520px;
+    line-height: 1.65;
+    margin-bottom: 48px;
+    font-weight: 300;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--coral);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 8px 24px rgba(255,107,71,0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--coral-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255,107,71,0.4);
+  }
+
+  .btn-secondary {
+    color: var(--mid);
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .free-tag {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PHONE MOCKUP */
+  .phone-wrap {
+    margin-top: 80px;
+    animation: fadeUp 0.8s ease 0.4s both;
+    position: relative;
+    z-index: 1;
+  }
+
+  .phone {
+    width: 300px;
+    background: #1A1108;
+    border-radius: 40px;
+    padding: 16px;
+    margin: 0 auto;
+    box-shadow: 0 32px 80px rgba(26,17,8,0.25), 0 0 0 1px rgba(255,255,255,0.05);
+  }
+
+  .phone-screen {
+    background: #F0F0F0;
+    border-radius: 28px;
+    padding: 20px 16px;
+    overflow: hidden;
+  }
+
+  .whatsapp-header {
+    background: #075E54;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 16px 16px 0 0;
+    margin: -20px -16px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .wa-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--coral);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .message-bubble {
+    background: white;
+    border-radius: 4px 16px 16px 16px;
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #1A1108;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-bottom: 8px;
+  }
+
+  .message-bubble .project {
+    font-weight: 600;
+    color: var(--coral);
+    margin-bottom: 4px;
+  }
+
+  .message-bubble .available {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .message-time {
+    font-size: 10px;
+    color: var(--light);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* HOW IT WORKS */
+  .section {
+    padding: 100px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 60px;
+    max-width: 600px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+
+  .step {
+    background: white;
+    border-radius: 24px;
+    padding: 36px 32px;
+    border: 1px solid rgba(255,107,71,0.08);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--coral);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(255,107,71,0.1);
+    border-color: rgba(255,107,71,0.2);
+  }
+
+  .step:hover::before {
+    transform: scaleX(1);
+  }
+
+  .step-number {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--coral-pale);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .step h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .step p {
+    color: var(--mid);
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .feature {
+    padding: 28px;
+    background: var(--coral-pale);
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+
+  .feature:hover {
+    background: white;
+    box-shadow: 0 8px 24px rgba(255,107,71,0.1);
+  }
+
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+
+  .feature h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feature p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* EARLY TESTER BAND */
+  .early-band {
+    background: var(--dark);
+    color: white;
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .early-band::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,107,71,0.15) 0%, transparent 70%);
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .early-band h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .early-band h2 em {
+    color: var(--coral);
+    font-style: italic;
+  }
+
+  .early-band p {
+    color: rgba(255,255,255,0.6);
+    font-size: 18px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  /* SIGN UP FORM */
+  .signup-section {
+    padding: 100px 24px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .form-card {
+    background: white;
+    border-radius: 32px;
+    padding: 48px 40px;
+    box-shadow: 0 24px 64px rgba(255,107,71,0.08);
+    border: 1px solid rgba(255,107,71,0.1);
+  }
+
+  .form-card h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .form-card p {
+    color: var(--mid);
+    margin-bottom: 32px;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1.5px solid rgba(255,107,71,0.15);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    background: var(--warm-white);
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus {
+    border-color: var(--coral);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(255,107,71,0.08);
+  }
+
+  .form-group input::placeholder {
+    color: var(--light);
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--coral);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.25s;
+    box-shadow: 0 8px 24px rgba(255,107,71,0.3);
+  }
+
+  .submit-btn:hover {
+    background: var(--coral-light);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(255,107,71,0.4);
+  }
+
+  .form-note {
+    font-size: 12px;
+    color: var(--light);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,107,71,0.1);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer .logo { font-size: 18px; }
+
+  footer p {
+    font-size: 13px;
+    color: var(--light);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,107,71,0.15), transparent);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Audition<span>Alert</span></div>
+  <a href="#signup" class="nav-cta">Join free beta <span class="free-tag">Free</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <span class="dot"></span>
+    Now in open beta — free for early members
+  </div>
+  <h1>Never miss your <em>next role.</em></h1>
+  <p>Every audition, every platform, delivered straight to your WhatsApp — with your calendar checked and your deadline already set. No more refreshing your email.</p>
+  <div class="hero-cta">
+    <a href="#signup" class="btn-primary">Join the free beta</a>
+    <a href="#how" class="btn-secondary">See how it works →</a>
+  </div>
+
+  <!-- PHONE MOCKUP -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="whatsapp-header">
+          <div class="wa-avatar">🎬</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">AuditionAlert</div>
+            <div style="font-size:10px;opacity:0.8;">online</div>
+          </div>
+        </div>
+        <div class="message-bubble">
+          <div class="project">🎬 New Audition Alert!</div>
+          <div><strong>Project:</strong> Neighbours Season 2</div>
+          <div><strong>Role:</strong> Lead Male, 30s</div>
+          <div><strong>Type:</strong> Self Tape</div>
+          <div><strong>Deadline:</strong> Fri 28 Feb, 5pm</div>
+          <br>
+          <div class="available">✅ Your calendar is clear!</div>
+          <br>
+          <div>⏰ Reminder added to your Google Calendar for Fri 11am</div>
+          <br>
+          <div>🔗 Submit: app.castingnetworks.com</div>
+          <div class="message-time">8:14 AM ✓✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Set up once. Never miss an audition again.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">01</div>
+      <div class="step-icon">📧</div>
+      <h3>Forward your alerts</h3>
+      <p>Set up a simple email forward from your casting platforms to your personal AuditionAlert inbox. Works with Casting Networks, Showcast, and more.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">02</div>
+      <div class="step-icon">📅</div>
+      <h3>Connect your calendar</h3>
+      <p>Link your Google Calendar so AuditionAlert can check your availability and automatically create deadline reminders.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">03</div>
+      <div class="step-icon">💬</div>
+      <h3>Get WhatsApp alerts</h3>
+      <p>Every new audition or self tape request lands in your WhatsApp — with your availability checked and a reminder already set.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Your personal casting assistant.</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h4>Real-time alerts</h4>
+      <p>Checked every 15 minutes from 7:30am to 9pm so you never miss a last-minute opportunity.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📆</div>
+      <h4>Calendar check</h4>
+      <p>Automatically cross-references your Google Calendar and flags any conflicts before you commit.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⏰</div>
+      <h4>Deadline reminders</h4>
+      <p>A calendar event is created automatically — 6 hours before every deadline so you're never caught off guard.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔗</div>
+      <h4>One tap to submit</h4>
+      <p>Every alert includes a direct link to your Casting Networks submissions page. One tap and you're there.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🤖</div>
+      <h4>AI powered</h4>
+      <p>Smart parsing reads your casting emails and extracts project, role, type and deadline automatically.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <h4>Private & secure</h4>
+      <p>Your data is never shared or sold. AuditionAlert only reads what it needs to send you alerts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EARLY TESTER BAND -->
+<section class="early-band">
+  <h2>Join the <em>founding</em> members.</h2>
+  <p>Free forever for our first 100 members. No credit card required.</p>
+  <a href="#signup" class="btn-primary" style="font-size:16px;padding:18px 48px;">Claim your free spot</a>
+</section>
+
+<!-- SIGN UP FORM -->
+<section class="signup-section" id="signup">
+  <div class="form-card">
+    <h2>Join the free beta 🎬</h2>
+    <p>We'll reach out with setup instructions within 24 hours.</p>
+    <iframe data-tally-src="https://tally.so/embed/KY6Wez?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="806" frameborder="0" marginheight="0" marginwidth="0" title="Audition Alert Sign up"></iframe>
+    <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+    <p class="form-note">🔒 No spam, ever. We'll only contact you about AuditionAlert setup and updates.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Audition<span>Alert</span></div>
+  <p>© 2026 AuditionAlert. Built for actors, by someone who gets it.</p>
+</footer>
+
+</body>
+</html>
